@@ -22,7 +22,11 @@ exports.create = async (req, res) => {
         // Create User
         let user = await models.User.create({
             email: req.body.email,
-            password: hash
+            password: hash,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            age: req.body.age,
+            gender: req.body.gender  
         })
 
         user = user.toJSON();
