@@ -47,11 +47,12 @@
                     </a>
                     </div>
                 </div>
-                <nuxt-link to="/profile" v-if="$store.state.user">
+                <nuxt-link to="/profile" v-if="$store.state.user" class="text-gray-500 hover:text-gray-700">
+                    <p class="inline-flex items-center pt-2 mr-1 text-sm font-medium ">Min profil</p>
                     <svg
                         fill="currentColor"
                         viewBox="0 0 20 20"
-                        class="mt-1 w-8 h-8 text-gray-500"
+                        class="mt-0 w-8 h-8 text-gray-500 inline-flex items-center"
                         >
                         <path
                             fill-rule="evenodd"

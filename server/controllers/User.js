@@ -97,3 +97,13 @@ exports.logout = (req, res) => {
         res.end();
     })
 }
+
+
+
+// Find all users
+exports.getAll  = async (req, res) => {
+    let users = await models.User.findAll();
+    let allUsers = users;
+    console.log("Running 'allUsers' from User.js " + allUsers);
+    res.json(allUsers);
+}

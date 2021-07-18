@@ -42,4 +42,12 @@ router.post(
     UserController.logout // Log in the User using the UserController (controllers/User.js)
 )
 
+
+
+// Get all Users
+router.get(
+    '/api/users/all', 
+    UserController.getAll // Log in the User using the UserController (controllers/User.js)
+)
+
 module.exports = router;
