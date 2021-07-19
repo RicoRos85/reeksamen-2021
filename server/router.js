@@ -4,6 +4,7 @@
 const express        = require('express');
 const { check } = require('express-validator'); // Used for server-side data validation
 const UserController = require('./controllers/User.js'); // Import User Controller
+const InterestController = require('./controllers/Interest.js'); // Import Interest Controller
 const router         = express.Router();
 
 
@@ -57,4 +58,11 @@ router.get(
     UserController.deleteUser // Log in the User using the UserController (controllers/User.js)
 )
 
+
+
+// Get all Interests
+router.get(
+    '/api/interests/all', 
+    InterestController.getAllInterests // Log in the User using the UserController (controllers/User.js)
+)
 module.exports = router;

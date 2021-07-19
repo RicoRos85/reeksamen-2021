@@ -25,7 +25,7 @@
                             </a>
                         </li>
                         <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
-                            <a class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
+                            <a href="#section3" class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
                                 <span class="pb-1 md:pb-0 text-sm">Slet profil</span>
                             </a>
                         </li>
@@ -98,34 +98,25 @@
                                 Checkboxes
                             </label>
                         </div>
+
+
                         <div class="md:w-2/3">
-                            <div>
+                            <div v-for="interest in interests" :key="interest.id" class="border-b border-gray-200 hover:bg-gray-100">
                                 <label class="inline-flex items-center">
                                     <input type="checkbox" class="form-checkbox text-indigo-600" checked="">
-                                    <span class="ml-2">Option 1</span>
+                                    <span class="ml-2">{{interest.interests}}</span>
                                 </label>
                             </div>
-                            <div>
-                                <label class="inline-flex items-center">
-                                    <input type="checkbox" class="form-checkbox text-green-500" checked="">
-                                    <span class="ml-2">Option 2</span>
-                                </label>
-                            </div>
-                            <div>
-                                <label class="inline-flex items-center">
-                                    <input type="checkbox" class="form-checkbox text-pink-600" checked="">
-                                    <span class="ml-2">Option 3</span>
-                                </label>
-                            </div>
-                            <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
+                       
+                            <p class="py-2 text-sm text-gray-600">sæt kryds ud for dine interesser</p>
                         </div>
                     </div>
 
                     <div class="md:flex md:items-center">
                         <div class="md:w-1/3"></div>
                         <div class="md:w-2/3">
-                            <button class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
-                                Rediger
+                            <button @click="saveInterests" class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
+                                Gem
                             </button>
                         </div>
                     </div>
@@ -174,6 +165,11 @@
 
 <script>
 export default {
+    data() {
+        return {
+            interests: [],
+        };
+    },
     fetch({ store, redirect }) {
         if (
             // If a User is not in our Store
@@ -194,7 +190,31 @@ export default {
             } catch (err) {
                 throw new Error(err)
             }
+        },
+        async saveInterests() {
+            try {
+                console.log("Mangler 'saveInterests' i profile.vue - derfor fejlen herunder opstår.");
+                await this.$axios.get('/api/interests/saveInterest');
+                
+            } catch (err) {
+                
+            }
         }
+    },
+    mounted() {
+        this.$axios
+        .get('/api/interests/all')
+        .then(response => {
+            this.interests = response.data;
+            console.log("Running 'this.interests' in profile.vue" + this.interests)
+          
+            // return response.data;
+            // console.log("HERE : " + this.users);
+            
+        })
+        .catch(err => {
+            throw err;
+        });
     }
 }
 </script>
