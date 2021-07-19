@@ -1,7 +1,7 @@
 <template>
-    <div class="h-screen flex items-center">
+    <div class="h-screen flex items-center py-16">
         <div
-            class="container max-w-md mx-auto xl:max-w-3xl flex bg-white rounded-lg shadow overflow-hidden flex"
+            class="container max-w-md m-auto xl:max-w-3xl flex bg-white rounded-lg shadow overflow-hidden flex"
         >
             <div class="relative hidden xl:block xl:w-1/2 h-full">
             <img
@@ -66,25 +66,33 @@ export default {
             password: ''
         }
     },
+    fetch({ store, redirect }) {
+        if (
+            store.state.user
+        ) {
+            return redirect('/profile');
+        }
+    },
     methods: {
-        submitForm() {
-            // Use axios to make HTTP requests
-            this.$axios.post('/api/users/login', {
-                // Declare which data should be sent
-                email: this.email,
-                password: this.password
-            // If everything is successfull
-            }).then(response => {
+        async submitForm() {
+            try {
+                // Use axios to make HTTP requests
+                const response = await this.$axios.post('/api/users/login', {
+                    // Declare which data should be sent
+                    email: this.email,
+                    password: this.password
+                // If everything is successfull
+                })
                 // Get SET_USER call from ../store/index.js
                 this.$store.commit(
                     'SET_USER', 
                     response.data
                 );
-                console.log(response);
-            // If there was an error
-            }).catch(error => {
-                console.log(error)
-            })
+                this.$router.push('/profile')
+            } catch (err) {
+                throw new Error(err);
+            }
+            
         }
     }
 }

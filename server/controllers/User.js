@@ -100,10 +100,33 @@ exports.logout = (req, res) => {
 
 
 
-// Find all users
+//////////////////////
+//  FIND ALL USERS  //
+//////////////////////
 exports.getAll  = async (req, res) => {
     let users = await models.User.findAll();
     let allUsers = users;
-    console.log("Running 'allUsers' from User.js " + allUsers);
     res.json(allUsers);
+}
+
+
+//////////////////////
+//  DELETE A USER  //
+//////////////////////
+exports.deleteUser = async (req, res) => {
+    try {
+        let user = await models.User.findOne({
+            where: {
+                id: req.session.user.id // Use Users session ID to match in the DB
+            }
+        })
+        user.destroy({
+            where: { id: req.session.user.id }
+        })
+        req.session.destroy((err) => {
+            res.end();
+        })
+    } catch (err) {
+        console.log(err);
+    }  
 }

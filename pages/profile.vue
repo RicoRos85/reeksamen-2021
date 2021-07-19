@@ -25,7 +25,7 @@
                             </a>
                         </li>
                         <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
-                            <a href="#section3" class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
+                            <a class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
                                 <span class="pb-1 md:pb-0 text-sm">Slet profil</span>
                             </a>
                         </li>
@@ -151,7 +151,7 @@
                 <div class="md:flex md:items-center">
                         <div class="md:w-1/3"></div>
                         <div class="md:w-2/3">
-                            <button class="shadow bg-red-700 hover:bg-red-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
+                            <button @click="deleteUser" class="shadow bg-red-700 hover:bg-red-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
                                 Slet profil
                             </button>
                         </div>
@@ -181,10 +181,20 @@ export default {
             // OR if there is a User and isAuthenticated is equal to false
             (store.state.user && store.state.user.isAuthenticated === false)
         ) {
-            // THEN rediect to registration
+            // THEN rediect to register
             return redirect('/')
         }
         
+    },
+    methods: {
+        async deleteUser() {
+            try {
+                await this.$axios.get('/api/users/deleteUser');
+                await this.$router.push('/register')
+            } catch (err) {
+                throw new Error(err)
+            }
+        }
     }
 }
 </script>

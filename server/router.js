@@ -50,4 +50,11 @@ router.get(
     UserController.getAll // Log in the User using the UserController (controllers/User.js)
 )
 
+
+// Delete the User
+router.get(
+    '/api/users/deleteUser', 
+    UserController.deleteUser // Log in the User using the UserController (controllers/User.js)
+)
+
 module.exports = router;

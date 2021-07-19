@@ -73,7 +73,6 @@
                             </div>
                         </div>
                     </div>
-
             </section>
      
         </div>
@@ -96,7 +95,7 @@ export default {
             // OR if there is a User and isAuthenticated is equal to false
             (store.state.user && store.state.user.isAuthenticated === false)
         ) {
-            // THEN rediect to registration
+            // THEN rediect to Home Page
             return redirect('/')
         }
         
