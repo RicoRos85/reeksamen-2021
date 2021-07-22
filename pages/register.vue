@@ -97,13 +97,12 @@
                         >
                         Køn
                         </label>
-                        <input
-                            id="gender"
-                            v-model="gender"
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline h-10"
-                            type="text"
-                            placeholder="Your gender"
-                        />
+                        <select id="gender" v-model="gender" class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline h-10"
+                            >
+                            <option disabled value="">Vælg dit køn</option>
+                            <option value="Mand">Mand</option>
+                            <option value="Kvinde">Kvinde</option>
+                        </select>
                     </div>
                     <div class="flex w-full mt-8">
                         <button class="w-full bg-gray-800 hover:bg-grey-900 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10">

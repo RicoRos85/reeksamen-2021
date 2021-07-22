@@ -11,3 +11,18 @@ exports.getAllInterests  = async (req, res) => {
     let allInterests = interests;
     res.json(allInterests);
 }
+
+
+exports.saveInterests = async (req, res) => {
+    try {
+        const userInterest = await models.User.findAll({
+            where: {
+                gender: req.body.email
+            }
+        })
+        console.log(userInterest)
+        res.end('We did it in Interest.js')
+    } catch (err) {
+        throw new Error(err)
+    }
+}

@@ -73,29 +73,8 @@
 
                     <div class="md:flex mb-6">
                         <div class="md:w-1/3">
-                            <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-radio">
-                                Radio Buttons
-                            </label>
-                        </div>
-                        <div class="md:w-2/3">
-                            <div class="mt-2">
-                                <label class="inline-flex items-center">
-                                    <input type="radio" class="form-radio text-indigo-600" name="radioOption" value="A">
-                                    <span class="ml-2">Radio A</span>
-                                </label>
-                                <label class="inline-flex items-center ml-6">
-                                    <input type="radio" class="form-radio" name="radioOption" value="B">
-                                    <span class="ml-2">Radio B</span>
-                                </label>
-                            </div>
-                            <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
-                        </div>
-                    </div>
-
-                    <div class="md:flex mb-6">
-                        <div class="md:w-1/3">
                             <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-checkbox">
-                                Checkboxes
+                                Jeg går op i:
                             </label>
                         </div>
 
@@ -103,7 +82,7 @@
                         <div class="md:w-2/3">
                             <div v-for="interest in interests" :key="interest.id" class="border-b border-gray-200 hover:bg-gray-100">
                                 <label class="inline-flex items-center">
-                                    <input type="checkbox" class="form-checkbox text-indigo-600" checked="">
+                                    <input :id="interest.id" type="checkbox" class="form-checkbox text-indigo-600" checked="">
                                     <span class="ml-2">{{interest.interests}}</span>
                                 </label>
                             </div>
@@ -193,24 +172,21 @@ export default {
         },
         async saveInterests() {
             try {
-                console.log("Mangler 'saveInterests' i profile.vue - derfor fejlen herunder opstår.");
-                await this.$axios.get('/api/interests/saveInterest');
-                
+                await this.$axios.post('/api/userInterest/saveUserInterest', {
+                    // Declare which data should be sent
+                    id_user:      "id_user her",
+                    id_pass:      "id_pass her"
+                });      
             } catch (err) {
-                
+                throw new Error(err)
             }
         }
     },
     mounted() {
         this.$axios
-        .get('/api/interests/all')
+        .get('/api/interests/all') // Get Interests from the API
         .then(response => {
             this.interests = response.data;
-            console.log("Running 'this.interests' in profile.vue" + this.interests)
-          
-            // return response.data;
-            // console.log("HERE : " + this.users);
-            
         })
         .catch(err => {
             throw err;

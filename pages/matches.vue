@@ -8,6 +8,15 @@
                     Matches
                 </h1>
                 <p class="flex items-center font-sans mt-12 lg:mt-2 px-2">Find et match blandt profilerne herunder:</p>
+                
+                <form>
+                    <select id="search" type="text" v-model="search" v-on:change="updateGender" class="flex items-center font-sans mt-12 lg:mt-2 px-2">
+                        <option value="">Søg efter køn</option>
+                        <option value="Mand">Mand</option>
+                        <option value="Kvinde">Kvinde</option>
+                    </select>
+                </form>
+            
    
                 <!-- component -->
                 <div class="overflow-x-auto">
@@ -25,7 +34,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="text-gray-600 text-sm font-light">
-                                            <tr v-for="user in users" :key="user.id" class="border-b border-gray-200 hover:bg-gray-100">
+                                            <tr v-for="user in users" :key="user.id"  class="border-b border-gray-200 hover:bg-gray-100">
                                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                                     <div class="flex items-center">
                                                         {{user.firstName}} {{ user.lastName}}
@@ -64,9 +73,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                            </tr>
-                                            
-                                            
+                                            </tr>  
                                         </tbody>
                                     </table>
                                 </div>
@@ -85,6 +92,7 @@
 export default {
     data() {
         return {
+            search: '',
             users: [],
         };
     },
@@ -98,6 +106,7 @@ export default {
             // THEN rediect to Home Page
             return redirect('/')
         }
+ 
         
     }, 
     mounted() {
@@ -105,7 +114,7 @@ export default {
         .get('/api/users/all')
         .then(response => {
             this.users = response.data;
-            console.log("Running 'this.user' in matches.vue" + this.users)
+            // console.log("Running 'this.user' in matches.vue" + this.users)
           
             // return response.data;
             // console.log("HERE : " + this.users);
@@ -114,6 +123,26 @@ export default {
         .catch(err => {
             throw err;
         });
+    },
+    methods: {
+        async updateGender() {
+            try {
+
+                await this.$axios.
+                    post('/api/users/filterAll', {
+                        search: "Mande eller kvinde"
+                    })
+                    .then((response) => {
+                        // this.search = response.data;
+                        console.log(this.search);
+                        this.search = response.data;
+                        console.log("Running 'this.users' in matches.vue " + response.data)
+                    })
+
+            } catch (err) {
+                throw new Error(err)
+            }
+        }
     }
 }
 </script>

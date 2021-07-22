@@ -7,12 +7,11 @@ const models = require('../models/index.js'); // Import Models initiazation file
 // CREATE A NEW USER  //
 ////////////////////////
 exports.create = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        console.log(errors);
-        return res.status(422).json(errors.array());
-    }
-    console.log(req.body);
+    // const errors = validationResult(req);
+        // if (!errors.isEmpty()) {
+        //     console.log(errors);
+        //     return res.status(422).json({ errors: errors.array() });
+        // }
 
     // Database code below
     try {
@@ -105,6 +104,8 @@ exports.logout = (req, res) => {
 //////////////////////
 exports.getAll  = async (req, res) => {
     let users = await models.User.findAll();
+    let body = req;
+    console.log("Her kommer det vi vil have: " + req.body);
     let allUsers = users;
     res.json(allUsers);
 }
